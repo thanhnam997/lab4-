@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic List</title>
+    <style>
+        #list-container {
+            max-width: 300px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="list-container">
+        <form id="input-form">
+            <input type="text" id="item-input" placeholder="Enter text (1-50 chars)">
+            <button type="button" onclick="addItem()">Add</button>
+            <button type="button" onclick="clearList()">Clear List</button>
+        </form>
+        <ul id="item-list"></ul>
+    </div>
+
+    <script>
+        function addItem() {
+            var inputText = document.getElementById('item-input').value.trim();
+
+            if (inputText === '') {
+                return; // Ignore if no text entered
+            }
+
+            if (inputText.length > 50) {
+                alert('Error: Text should be between 1 and 50 characters.');
+                return;
+            }
+
+            var itemList = document.getElementById('item-list');
+            var listItem = document.createElement('li');
+            listItem.textContent = inputText;
+
+            itemList.appendChild(listItem);
+            
+            // Clear input after adding to the list
+            document.getElementById('item-input').value = '';
+
+            // Disable input after reaching 10 items
+            if (itemList.children.length >= 10) {
+                document.getElementById('item-input').disabled = true;
+            }
+        }
+
+        function clearList() {
+            var itemList = document.getElementById('item-list');
+            while (itemList.firstChild) {
+                itemList.removeChild(itemList.firstChild);
+            }
+
+            // Enable input after clearing the list
+            document.getElementById('item-input').disabled = false;
+        }
+    </script>
+</body>
+</html>
