@@ -9,6 +9,16 @@
             max-width: 300px;
             margin: 20px;
         }
+
+        #custom-alert {
+            display: none;
+            background-color: #f8d7da; /* Bootstrap's alert-danger background color */
+            color: #721c24; /* Bootstrap's alert-danger text color */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #f5c6cb; /* Bootstrap's alert-danger border color */
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -19,6 +29,7 @@
             <button type="button" onclick="clearList()">Clear List</button>
         </form>
         <ul id="item-list"></ul>
+        <div id="custom-alert">Note: You have reached the maximum limit of 10 items.</div>
     </div>
 
     <script>
@@ -36,9 +47,9 @@
 
             let itemList = document.getElementById('item-list');
 
-            // Display alert if trying to add more than 10 items
+            // Display custom alert if trying to add more than 10 items
             if (itemList.children.length >= 10) {
-                alert('Error: You cannot add more than 10 items.');
+                document.getElementById('custom-alert').style.display = 'block';
                 return;
             }
 
@@ -52,13 +63,17 @@
 
             // Disable input after reaching 10 items
             if (itemList.children.length >= 10) {
-                alert('Note: You have reached the maximum limit of 10 items.');
+                document.getElementById('custom-alert').style.display = 'block';
                 document.getElementById('item-input').disabled = true;
             }
         }
 
         function clearList() {
             let itemList = document.getElementById('item-list');
+
+            // Hide custom alert when clearing the list
+            document.getElementById('custom-alert').style.display = 'none';
+
             while (itemList.firstChild) {
                 itemList.removeChild(itemList.firstChild);
             }
