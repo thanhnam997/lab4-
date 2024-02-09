@@ -23,7 +23,7 @@
 
     <script>
         function addItem() {
-            var inputText = document.getElementById('item-input').value.trim();
+            let inputText = document.getElementById('item-input').value.trim();
 
             if (inputText === '') {
                 return; // Ignore if no text entered
@@ -34,8 +34,15 @@
                 return;
             }
 
-            var itemList = document.getElementById('item-list');
-            var listItem = document.createElement('li');
+            let itemList = document.getElementById('item-list');
+
+            // Display alert if trying to add more than 10 items
+            if (itemList.children.length >= 10) {
+                alert('Error: You cannot add more than 10 items.');
+                return;
+            }
+
+            let listItem = document.createElement('li');
             listItem.textContent = inputText;
 
             itemList.appendChild(listItem);
@@ -50,7 +57,7 @@
         }
 
         function clearList() {
-            var itemList = document.getElementById('item-list');
+            let itemList = document.getElementById('item-list');
             while (itemList.firstChild) {
                 itemList.removeChild(itemList.firstChild);
             }
