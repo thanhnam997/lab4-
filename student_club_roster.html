@@ -7,8 +7,13 @@
     document.getElementById("student-count").textContent = studentCount;
   }
 
-  // Event listener for the "Add Student" button
+ // Event listener for the "Add Student" button
   document.getElementById("add-student").addEventListener("click", function () {
+    // Read input values
+    let name = document.getElementById("student-name").value.trim();
+    let ID = document.getElementById("student-id").value.trim();
+    let gpa = parseFloat(document.getElementById("student-gpa").value);
+
     // Read input values
     let name = document.getElementById("student-name").value.trim();
     let ID = document.getElementById("student-id").value.trim();
@@ -26,7 +31,14 @@
     let li = document.createElement("li");
     li.innerHTML = `${name}, id: ${ID}, GPA ${gpa}`;
 
-    // Toggle selected class on click
+
+     // Validate GPA
+    if (isNaN(gpa) || gpa < 0 || gpa > 4) {
+      alert("Please enter a valid GPA in the range 0-4.");
+      return;
+    }
+
+// Toggle selected class on click
     li.addEventListener("click", function () {
       li.classList.toggle("selected");
     });
@@ -43,7 +55,6 @@
     studentCount++;
     updateStudentCount();
   });
-
   // Event listener for the "Remove Selected Students" button
   document.getElementById("remove-selected-students").addEventListener("click", function () {
     // Remove all elements with the class "selected" from the list
