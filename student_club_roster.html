@@ -1,66 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Club Membership</title>
+
+    <style>
+        .selected {
+            text-decoration: line-through;
+            font-style: italic;
+            color: gray;
+        }
+
+        input {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 5px 5px 0px;
+            box-sizing: border-box;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Student Club Roster</h1>
+
+<h2>Add Students</h2>
+
+<label for="student-name">Student Name</label><input id="student-name" name="student-name">
+<br>
+<label for="student-id">Student ID</label><input id="student-id" name="student-id">
+<br>
+<label for="student-gpa">Student GPA</label><input id="student-gpa" name="student-gpa" type="number">
+<br>
+<button id="add-student">Add Student</button>
+
+<h2>Student List</h2>
+
+<p>There are
+    <span id="student-count">
+          <!-- use JavaScript to count the number of students, and show here -->
+    </span>
+    student(s) in the club.
+</p>
+
+<p>Click on a student's name to select them</p>
+
+<ul id="student-list">
+    <!-- use JavaScript to create li elements  -->
+</ul>
+
+<button id="remove-selected-students">Remove selected students</button>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Initialize student count
+    // student count
     let studentCount = 0;
 
-    // Display 0 in the span#student-count
-    updateStudentCount();
+    // When the page loads: Using JavaScript, display 0 in the span#student-count
+    $(document).ready(function () {
+        updateStudentCount();
+    });
 
     // Event listener for the "Add Student" button
-    document.getElementById("add-student").addEventListener("click", function () {
-      // Read values from input fields
-      let name = document.getElementById("student-name").value.trim();
-      let id = document.getElementById("student-id").value.trim();
-      let gpa = parseFloat(document.getElementById("student-gpa").value);
+    $("#add-student").on("click", function () {
+        // Read values from inputs
+        let name = $("#student-name").val().trim();
+        let id = $("#student-id").val().trim();
+        let gpa = $("#student-gpa").val().trim();
 
-      // Validate input values
-      if (!name || !id || isNaN(gpa) || gpa < 0 || gpa > 4) {
-        alert("Please enter valid information for all fields.");
-        return;
-      }
+        // Check for valid inputs
+        if (!name || !id || !gpa || gpa < 0 || gpa > 4) {
+            alert("Please enter valid information for all fields.");
+            return;
+        }
 
-      // Create a new li element
-      let li = document.createElement("li");
+        // Create a new li element
+        let li = $("<li>").html(`${name}, id: ${id}, GPA ${gpa}`);
 
-      // Set innerHTML of the li element
-      li.innerHTML = `${name}, id: ${id}, GPA ${gpa}`;
+        // Add a click event handler to the new li element
+        li.on("click", function () {
+            // Toggle the selected class on click
+            $(this).toggleClass("selected");
+        });
 
-      // Add a click event handler to the new li element
-      li.addEventListener("click", function () {
-        // Toggle the "selected" class on click
-        li.classList.toggle("selected");
-      });
+        // Add the new li element to ul#student-list element
+        $("#student-list").append(li);
 
-      // Add the new li element to ul#student-list
-      document.getElementById("student-list").appendChild(li);
+        // Clear the values of the three input elements
+        $("#student-name").val("");
+        $("#student-id").val("");
+        $("#student-gpa").val("");
 
-      // Clear input values
-      document.getElementById("student-name").value = "";
-      document.getElementById("student-id").value = "";
-      document.getElementById("student-gpa").value = "";
-
-      // Update student count and span
-      studentCount++;
-      updateStudentCount();
+        // Update the span#student-count value to the new number of students
+        updateStudentCount();
     });
 
     // Event listener for the "Remove Selected Students" button
-    document.getElementById("remove-selected-students").addEventListener("click", function () {
-      // Remove elements with the class="selected" from the list
-      let selectedElements = document.querySelectorAll("#student-list .selected");
-      selectedElements.forEach(function (element) {
-        element.remove();
-        // Decrease student count for each removed element
-        studentCount--;
-      });
-
-      // Update student count and span
-      updateStudentCount();
+    $("#remove-selected-students").on("click", function () {
+        // Remove all elements with the class "selected" from the list
+        $("#student-list .selected").remove();
+        // Update the span#student-count value to the new number of students
+        updateStudentCount();
     });
 
-    // Function to update the span#student-count
     function updateStudentCount() {
-      document.getElementById("student-count").textContent = studentCount;
+        $("#student-count").text($("#student-list li").length);
     }
-  });
 </script>
+
+</body>
+</html>
