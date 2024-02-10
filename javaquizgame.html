@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        #result-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <p>What is the capital of France?</p>
+    <Button  class="wrong-answer">Berlin </Button>
+    <button id="correct-answer">Paris</Button>
+    <Button class="wrong-answer">Madrid</Button>
+    
+    
+    <p id="result"></p>
+
+    <script>
+        
+    // Write your script here
+    let correctAnswerButton = document.querySelector('#correct-answer');
+    let defaultbuttoncolor = correctAnswerButton.style.background;
+    
+    let result = document.querySelector('#result');
+    let wrongAnswerButton =document.querySelectorAll('.wrong-answer')
+   
+    
+    
+    wrongAnswerButton.forEach(function(wrongAnswerButton){   
+        wrongAnswerButton.addEventListener('click', function(){
+            result.innerHTML = 'Wrong answer, try again?';
+            correctAnswerButton.style.background = defaultbuttoncolor;
+        });
+    });
+    
+    correctAnswerButton.addEventListener('click', function() {
+        result.innerHTML = 'Correct answer!';
+         correctAnswerButton.style.background = 'red';
+    });
+</script>
+
+
+</body>
+</html>
