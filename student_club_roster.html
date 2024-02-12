@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Club Membership</title>
-
     <style>
         .selected {
             text-decoration: line-through;
@@ -17,7 +16,6 @@
             box-sizing: border-box;
         }
     </style>
-
 </head>
 <body>
 
@@ -50,61 +48,60 @@
 
 <button id="remove-selected-students">Remove selected students</button>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
+    // Your JavaScript code without jQuery goes here
+
     // student count
     let studentCount = 0;
 
     // When the page loads: Using JavaScript, display 0 in the span#student-count
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
         updateStudentCount();
     });
 
     // Event listener for the "Add Student" button
-    $("#add-student").on("click", function () {
-        // Read values from inputs
-        let name = $("#student-name").val().trim();
-        let id = $("#student-id").val().trim();
-        let gpa = $("#student-gpa").val().trim();
+    document.getElementById("add-student").addEventListener("click", function () {
+        // Your existing logic for adding a student
+        let name = document.getElementById("student-name").value.trim();
+        let id = document.getElementById("student-id").value.trim();
+        let gpa = document.getElementById("student-gpa").value.trim();
 
-        // Check for valid inputs
         if (!name || !id || !gpa || gpa < 0 || gpa > 4) {
             alert("Please enter valid information for all fields.");
             return;
         }
 
-        // Create a new li element
-        let li = $("<li>").html(`${name}, id: ${id}, GPA ${gpa}`);
+        let li = document.createElement("li");
+        li.innerHTML = `${name}, id: ${id}, GPA ${gpa}`;
 
-        // Add a click event handler to the new li element
-        li.on("click", function () {
-            // Toggle the selected class on click
-            $(this).toggleClass("selected");
+        li.addEventListener("click", function () {
+            this.classList.toggle("selected");
         });
 
-        // Add the new li element to ul#student-list element
-        $("#student-list").append(li);
+        document.getElementById("student-list").appendChild(li);
 
-        // Clear the values of the three input elements
-        $("#student-name").val("");
-        $("#student-id").val("");
-        $("#student-gpa").val("");
+        document.getElementById("student-name").value = "";
+        document.getElementById("student-id").value = "";
+        document.getElementById("student-gpa").value = "";
 
-        // Update the span#student-count value to the new number of students
         updateStudentCount();
     });
 
     // Event listener for the "Remove Selected Students" button
-    $("#remove-selected-students").on("click", function () {
-        // Remove all elements with the class "selected" from the list
-        $("#student-list .selected").remove();
-        // Update the span#student-count value to the new number of students
+    document.getElementById("remove-selected-students").addEventListener("click", function () {
+        // Your existing logic for removing selected students
+        let selectedStudents = document.querySelectorAll("#student-list .selected");
+
+        selectedStudents.forEach(function (student) {
+            student.remove();
+        });
+
         updateStudentCount();
     });
 
     function updateStudentCount() {
-        $("#student-count").text($("#student-list li").length);
+        // Your existing logic for updating the student count
+        document.getElementById("student-count").innerText = document.querySelectorAll("#student-list li").length;
     }
 </script>
 
